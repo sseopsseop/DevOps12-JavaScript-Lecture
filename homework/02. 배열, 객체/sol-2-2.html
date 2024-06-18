@@ -9,7 +9,7 @@
     <div class="lotto-picker"></div>
     <div class="my-picker"></div>
     <div class="result"></div>
-    <script>
+    <script> 
         const picks = [];
         const lottoNums = [];
         const lottoChecks = [];
@@ -31,7 +31,6 @@
             }
             if(lottoNums.length === size + 1) break;
         }
-
         for(let i = 0; i < size; ++i){
             picks.push(window.prompt(`1~45까지의 숫자를 입력하세요(hint : ${resultstr})`));
         }
@@ -70,6 +69,10 @@
                 }
             }
         }
+
+        if(cnt != 6 && checked2nd) cnt--;
+    
+
         if(cnt <= 2) result.innerText = "꽝!";
         else if(cnt == 3) result.innerText = "5등!";
         else if(cnt == 4) result.innerText = "4등!";
