@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>타이머</title>
+</head>
+<body>
+    <button type="button" id="stopBtn">타이머 종료</button>
+    <h1 class="time"></h1>
+    <script>
+        let hour = 0;
+        let minute = 0;
+        let second = 0;
+
+        const stopBtn = document.getElementById("stopBtn");
+        const display = document.getElementsByClassName("time")[0];
+
+        display.textContent = `0${hour}:0${minute}:0${second}`;
+
+        const interval = setInterval(()=>{
+            
+            second += 1;
+            if(second == 60){
+                minute += 1;
+                second = 0;
+            }
+
+            if(minute == 60){
+                hour += 1;
+                minute = 0;
+            }
+            
+            let displayString = "";
+            if(hour < 10) displayString = `0${hour}:`;
+            else displayString = `${hour}:`;
+            if(minute < 10) displayString += `0${minute}:`;
+            else displayString += `${minute}:`;
+            if(second < 10) displayString += `0${second}`;
+            else displayString += `${second}`;
+
+            // innerText는 해당 노드 밑으로 숨겨진 노드에 한해서는 가져오지 못한다
+            // textContent는 해당 노드 밑으로 가지고 있는 모든 text를 가져올 수 있다.
+            display.innerText = displayString;
+            // display.textContent = displayString;
+        }, 10);
+
+        stopBtn.addEventListener("click", ()=>{
+            if(interval !== null && typeof interval !== "undefined"){
+                clearInterval(interval);
+            }
+        });
+
+    </script>
+</body>
+</html>

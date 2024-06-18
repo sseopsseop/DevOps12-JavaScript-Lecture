@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz 2-2</title>
+</head>
+<body>
+    <div class="lotto-picker"></div>
+    <div class="my-picker"></div>
+    <div class="result"></div>
+    <script>
+        const picks = [];
+        const lottoNums = [];
+        const lottoChecks = [];
+        const size = 6;
+        const lottoSize = 45;
+
+
+        for(let i = 0; i <= lottoSize; ++i){
+            lottoChecks.push(false);
+        }
+
+        let resultstr = "";
+        while(true){
+            const val = Math.floor(Math.random() * 45) + 1;
+            if(!lottoChecks[val]){
+                lottoNums.push(val);
+                lottoChecks[val] = true;
+                resultstr += `${val}, `;
+            }
+            if(lottoNums.length === size + 1) break;
+        }
+
+        for(let i = 0; i < size; ++i){
+            picks.push(window.prompt(`1~45까지의 숫자를 입력하세요(hint : ${resultstr})`));
+        }
+
+        
+        let lottoStr = "";
+        let myStr = "";
+
+        // html 텍스트 형태 삽입
+        for(let i = 0 ; i < lottoNums.length; ++i){
+            if(i !== lottoNums.length -1) lottoStr += `${lottoNums[i]}, `;
+            else lottoStr += `보너스 번호 : ${lottoNums[i]}`;
+        }
+
+        for(let i = 0; i < picks.length; ++i){
+            myStr += `${picks[i]}`;
+            if(i !== picks.length - 1) myStr += ", ";
+        }
+
+
+        const lottoPicker = document.getElementsByClassName("lotto-picker")[0];
+        const myPicker = document.getElementsByClassName("my-picker")[0];
+        const result = document.getElementsByClassName("result")[0];
+
+        lottoPicker.innerText = lottoStr;
+        myPicker.innerText = myStr;
+
+        let cnt = 0;
+        let checked2nd = false;
+        for(let i = 0 ; i < picks.length; ++i){
+            for(let j = 0; j < lottoNums.length; ++j){
+                if(picks[i] == lottoNums[j]){
+                    cnt++;
+                    if(j == lottoNums.length - 1) checked2nd = true;
+                    break;
+                }
+            }
+        }
+        if(cnt <= 2) result.innerText = "꽝!";
+        else if(cnt == 3) result.innerText = "5등!";
+        else if(cnt == 4) result.innerText = "4등!";
+        else if(cnt == 5) result.innerText = "3등!";
+        else if(cnt == 6){
+            if(checked2nd) result.innerText = "2등!";
+            else result.innerText = "1등!!!";
+        }
+    
+    </script>
+</body>
+</html>
